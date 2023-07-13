@@ -1,0 +1,13 @@
+.sign__input {
+    width: 358px;
+    height: 27px;
+    display: block;
+    border: 0;
+    border-bottom: 2px solid #ccc;
+    background-color: #000;
+    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #ccc;
+}

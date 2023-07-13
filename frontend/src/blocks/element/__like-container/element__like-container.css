@@ -1,0 +1,7 @@
+.element__like-container {
+  width: 22px;
+  height: 35px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}

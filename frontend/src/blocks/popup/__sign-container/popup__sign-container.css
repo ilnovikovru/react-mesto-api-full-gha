@@ -1,0 +1,7 @@
+.popup__sign-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    align-content: center;
+    margin-bottom: 20px;
+}

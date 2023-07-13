@@ -1,0 +1,6 @@
+.element__link {
+  text-decoration: none;
+  border: 1px solid red;
+  margin: 0;
+  padding: 0;
+}

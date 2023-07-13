@@ -1,0 +1,10 @@
+.profile__avatar-container {
+  background-color: #000;
+  background-image: url(../../../images/icons/edit-avatar.svg);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  border-radius: 60px;
+  width: 120px;
+  height: 120px;
+  transition: opacity .8s ease-in-out;
+}

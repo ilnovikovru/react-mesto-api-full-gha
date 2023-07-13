@@ -1,0 +1,11 @@
+.main {
+  margin: auto;
+  max-width: 880px;
+}
+
+@media screen and (max-width: 879px) {
+  .main {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+}

@@ -1,0 +1,11 @@
+.element__name {
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
+  margin: 0;
+  padding-top: 26px;
+  padding-left: 22px;
+  padding-bottom: 25px;
+  padding-right: 21px;
+  display: grid;
+  grid-template-columns: 1fr 22px;
+}
