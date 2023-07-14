@@ -113,7 +113,7 @@ class Api {
 }
 
 const apiConfig = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-62',
+  url: 'https://ilnovikovru.nomoredomains.work/api/',
   headers: {
     'content-type': 'application/json',
     authorization: 'e70c5caa-7ab0-4df0-ba41-176f0bfef9df'
