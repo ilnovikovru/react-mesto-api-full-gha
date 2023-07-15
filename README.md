@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP 51.250.109.233
+IP 158.160.13.240
 
 Frontend https://ilnovikovru.nomoredomains.work/
 
