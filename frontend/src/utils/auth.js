@@ -1,3 +1,4 @@
+import apiConfig from './api';
 export const BASE_URL = 'https://ilnovikovru.nomoredomains.work/api';
 
 const checkResponse = (res) => {
@@ -31,6 +32,11 @@ export const authorize = (email, password) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password })
+    }).then(data => {
+        if (data.token) {
+            apiConfig.setToken(data.token);
+        }
+        return data;
     });
 };
 

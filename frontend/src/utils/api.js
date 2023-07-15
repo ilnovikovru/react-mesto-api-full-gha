@@ -1,7 +1,13 @@
 class Api {
   constructor(config) {
     this._baseUrl = config.url;
-    this._headers = config.headers;
+  }
+
+  setToken(token) {
+    this._headers = {
+      'content-type': 'application/json',
+      authorization: `Bearer ${token}`
+    };
   }
 
   _checkResponse(res) {
@@ -114,10 +120,6 @@ class Api {
 
 const apiConfig = new Api({
   url: 'https://ilnovikovru.nomoredomains.work/api',
-  headers: {
-    'content-type': 'application/json',
-    authorization: 'e70c5caa-7ab0-4df0-ba41-176f0bfef9df'
-  }
 });
 
 export default apiConfig;
