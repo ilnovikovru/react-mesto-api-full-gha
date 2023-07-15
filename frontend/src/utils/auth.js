@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://ilnovikovru.nomoredomains.work/api';
 
 const checkResponse = (res) => {
     if (res.ok) {
