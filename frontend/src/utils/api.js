@@ -4,6 +4,7 @@ class Api {
   }
 
   setToken(token) {
+    console.log("Токен установлен: ", token);
     this._headers = {
       'content-type': 'application/json',
       authorization: `Bearer ${token}`
