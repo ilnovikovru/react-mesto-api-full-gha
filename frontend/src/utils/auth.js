@@ -34,7 +34,9 @@ export const authorize = (email, password) => {
         body: JSON.stringify({ email, password })
     }).then(data => {
         if (data.token) {
+            console.log("Token before setToken:", data.token);
             apiConfig.setToken(data.token);
+            console.log("Token after setToken:", apiConfig.getToken());
         }
         return data;
     });
