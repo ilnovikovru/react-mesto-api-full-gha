@@ -3,8 +3,9 @@ class Api {
     this._baseUrl = config.url;
   }
 
-  _getHeaders(token) {
-    return {
+  setToken(token) {
+    console.log("Токен установлен: ", token);
+    this._headers = {
       'content-type': 'application/json',
       authorization: `Bearer ${token}`
     };
@@ -21,17 +22,17 @@ class Api {
     return fetch(`${this._baseUrl}${endpoint}`, options).then(this._checkResponse);
   }
 
-  getUserInfo(token) {
+  getUserInfo() {
     return this._request('/users/me', {
       method: 'GET',
-      headers: this._getHeaders(token)
+      headers: this._headers
     });
   }
 
-  setUserInfo(token, data) {
+  setUserInfo(data) {
     return this._request('/users/me', {
       method: 'PATCH',
-      headers: this._getHeaders(token),
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -39,27 +40,27 @@ class Api {
     });
   }
 
-  setUserAvatar(token, data) {
+  setUserAvatar(data) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
-      headers: this._getHeaders(token),
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
       })
     });
   }
 
-  getInitialCards(token) {
+  getInitialCards() {
     return this._request('/cards', {
       method: 'GET',
-      headers: this._getHeaders(token)
+      headers: this._headers
     });
   }
 
-  editUserInfo(token, data) {
+  editUserInfo(data) {
     return this._request('/users/me', {
       method: 'PATCH',
-      headers: this._getHeaders(token),
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -67,10 +68,10 @@ class Api {
     });
   }
 
-  addCard(token, data) {
+  addCard(data) {
     return this._request('/cards', {
       method: 'POST',
-      headers: this._getHeaders(token),
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -78,39 +79,39 @@ class Api {
     });
   }
 
-  deleteCard(token, _id) {
+  deleteCard(_id) {
     return this._request(`/cards/${_id}`, {
       method: 'DELETE',
-      headers: this._getHeaders(token)
+      headers: this._headers
     });
   }
 
-  likeCard(token, _id) {
+  likeCard(_id) {
     return this._request(`/cards/${_id}/likes`, {
       method: 'PUT',
-      headers: this._getHeaders(token)
+      headers: this._headers
     });
   }
 
-  dislikeCard(token, _id) {
+  dislikeCard(_id) {
     return this._request(`/cards/${_id}/likes`, {
       method: 'DELETE',
-      headers: this._getHeaders(token)
+      headers: this._headers
     });
   }
 
-  changeLikeCardStatus(token, cardId, like) {
+  changeLikeCardStatus(cardId, like) {
     if (like) {
-      return this.likeCard(token, cardId);
+      return this.likeCard(cardId);
     } else {
-      return this.dislikeCard(token, cardId);
+      return this.dislikeCard(cardId);
     }
   }
 
-  editAvatar(token, data) {
+  editAvatar(data) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
-      headers: this._getHeaders(token),
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.link,
       })
@@ -121,7 +122,5 @@ class Api {
 const apiConfig = new Api({
   url: 'https://ilnovikovru.nomoredomains.work/api',
 });
-
-console.log(apiConfig);
 
 export default apiConfig;
