@@ -46,14 +46,15 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send({ message });
 });
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/mestodb', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    app.listen(3000, () => {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
       // eslint-disable-next-line no-console
-      console.log('Слушаю порт 3000');
+      console.log(`Слушаю порт ${port}`);
     });
   })
   .catch((err) => {
     // eslint-disable-next-line no-console
-    console.log(`Ошибка при подключении к базе данных: ${err}`);
+    console.log(`Error connecting to database: ${err}`);
   });
