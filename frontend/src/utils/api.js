@@ -123,4 +123,6 @@ const apiConfig = new Api({
   url: 'https://ilnovikovru.nomoredomains.work/api',
 });
 
+console.log(apiConfig);
+
 export default apiConfig;
