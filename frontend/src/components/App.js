@@ -34,6 +34,21 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    if (loggedIn) {
+      const token = localStorage.getItem('jwt');
+  
+      Promise.all([apiConfig.getUserInfo(token), apiConfig.getInitialCards(token)])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
+
+  React.useEffect(() => {
     apiConfig.getUserInfo()
       .then((userInfo) => {
         setCurrentUser(userInfo);
