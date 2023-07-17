@@ -3,6 +3,14 @@ class Api {
     this._baseUrl = config.url;
   }
 
+  setToken(token) {
+    console.log("Токен установлен: ", token);
+    this._headers = {
+      'content-type': 'application/json',
+      authorization: `Bearer ${token}`
+    };
+  }
+
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -22,15 +30,12 @@ class Api {
         authorization: `Bearer ${token}`
       }
     });
-  }
+  }  
 
-  setUserInfo(token, data) {
+  setUserInfo(data) {
     return this._request('/users/me', {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -38,13 +43,10 @@ class Api {
     });
   }
 
-  setUserAvatar(token, data) {
+  setUserAvatar(data) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
       })
@@ -61,13 +63,10 @@ class Api {
     });
   }
 
-  editUserInfo(token, data) {
+  editUserInfo(data) {
     return this._request('/users/me', {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -75,13 +74,10 @@ class Api {
     });
   }
 
-  addCard(token, data) {
+  addCard(data) {
     return this._request('/cards', {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -89,55 +85,43 @@ class Api {
     });
   }
 
-  deleteCard(token, _id) {
+  deleteCard(_id) {
     return this._request(`/cards/${_id}`, {
       method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      }
+      headers: this._headers
     });
   }
 
-  likeCard(token, _id) {
+  likeCard(_id) {
     return this._request(`/cards/${_id}/likes`, {
       method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      }
+      headers: this._headers
     });
   }
 
-  dislikeCard(token, _id) {
+  dislikeCard(_id) {
     return this._request(`/cards/${_id}/likes`, {
       method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      }
+      headers: this._headers
     });
   }
 
-  changeLikeCardStatus(token, cardId, like) {
+  changeLikeCardStatus(cardId, like) {
     if (like) {
-      return this.likeCard(token, cardId);
+      return this.likeCard(cardId);
     } else {
-      return this.dislikeCard(token, cardId);
+      return this.dislikeCard(cardId);
     }
   }
 
-  editAvatar(token, data) {
+  editAvatar(data) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.link,
       })
-    });
+    }).then(console.log());
   }
 }
 

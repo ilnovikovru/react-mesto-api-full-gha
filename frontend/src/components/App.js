@@ -34,39 +34,30 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if (loggedIn) {
-      const token = localStorage.getItem('jwt');
-  
-      Promise.all([apiConfig.getUserInfo(token), apiConfig.getInitialCards(token)])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          setCards(cards);
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      apiConfig.getUserInfo(token)
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [loggedIn]);
-
-  React.useEffect(() => {
-    apiConfig.getUserInfo()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
-
+  
   React.useEffect(() => {
-    apiConfig.getInitialCards()
-      .then((initialCards) => {
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      apiConfig.getInitialCards(token)
+        .then((initialCards) => {
+          setCards(initialCards);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);  
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -85,8 +76,9 @@ function App() {
   };
 
   function handleCardLike(card) {
+    const token = localStorage.getItem('jwt');
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    apiConfig.changeLikeCardStatus(card._id, !isLiked)
+    apiConfig.changeLikeCardStatus(token, card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
@@ -96,7 +88,8 @@ function App() {
   }
 
   const handleCardDelete = (card) => {
-    apiConfig.deleteCard(card._id)
+    const token = localStorage.getItem('jwt');
+    apiConfig.deleteCard(token, card._id)
       .then(() => {
         const newCards = cards.filter((c) => c._id !== card._id);
         setCards(newCards);
@@ -107,8 +100,9 @@ function App() {
   };
 
   const handleUpdateUser = (userData) => {
+    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.setUserInfo(userData).then(setCurrentUser);
+      return apiConfig.setUserInfo(token, userData).then(setCurrentUser);
     }
     handleSubmit(makeRequest);
   };
@@ -124,8 +118,9 @@ function App() {
   const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard;
 
   const handleUpdateAvatar = (avatarData) => {
+    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.setUserAvatar(avatarData).then(setCurrentUser);
+      return apiConfig.setUserAvatar(token, avatarData).then(setCurrentUser);
     }
     handleSubmit(makeRequest);
   };
@@ -139,8 +134,9 @@ function App() {
   }
 
   const handleAddPlaceSubmit = (newCard) => {
+    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.addCard(newCard).then((newCard) => {
+      return apiConfig.addCard(token, newCard).then((newCard) => {
         setCards([newCard, ...cards]);
       });
     }
@@ -238,7 +234,6 @@ function App() {
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
           <PopupWithForm title='Вы уверены?' name='delete' buttonText="Да">
-          // тут надо доделать
           </PopupWithForm>
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
