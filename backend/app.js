@@ -48,8 +48,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', signinValidation, login);
-app.post('/signup', signupValidation, createUser);
+app.post('/api/signin', signinValidation, login);
+app.post('/api/signup', signupValidation, createUser);
 
 app.use(auth);
 app.use(userRoutes);
