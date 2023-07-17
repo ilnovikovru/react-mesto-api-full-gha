@@ -6,10 +6,10 @@ const { validateObjId, validateUserUpdate, validateAvatarUpdate } = require('../
 
 const router = express.Router();
 
-router.get('/users', getUsers);
-router.get('/users/me', getUserInfo);
-router.patch('/users/me', validateUserUpdate, updateUserInfo);
-router.patch('/users/me/avatar', validateAvatarUpdate, updateAvatar);
-router.get('/users/:id', validateObjId, getUserById);
+router.get('/api//users', getUsers);
+router.get('/api//users/me', getUserInfo);
+router.patch('/api//users/me', validateUserUpdate, updateUserInfo);
+router.patch('/api//users/me/avatar', validateAvatarUpdate, updateAvatar);
+router.get('/api//users/:id', validateObjId, getUserById);
 
 module.exports = router;

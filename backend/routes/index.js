@@ -5,11 +5,11 @@ const { login, createUser } = require('../controllers/user');
 const auth = require('../middlewares/auth');
 const { signinValidation, signupValidation } = require('../validators');
 
-router.post('/signin', signinValidation, login);
-router.post('/signup', signupValidation, createUser);
+router.post('/api/signin', signinValidation, login);
+router.post('/api/signup', signupValidation, createUser);
 
 router.use(auth);
-router.use('/users', userRoutes);
-router.use('/cards', cardRoutes);
+router.use('/api/users', userRoutes);
+router.use('/api/cards', cardRoutes);
 
 module.exports = router;
