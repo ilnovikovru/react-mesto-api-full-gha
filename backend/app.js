@@ -29,6 +29,12 @@ app.get('/crash-test', () => {
 app.post('/api/signin', signinValidation, login);
 app.post('/api/signup', signupValidation, createUser);
 
+app.use((req, res, next) => {
+  // eslint-disable-next-line no-console
+  console.log(`Токен получен: ${req.headers.authorization}`);
+  next();
+});
+
 app.use(auth);
 app.use(userRoutes);
 app.use(cardRoutes);
