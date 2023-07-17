@@ -20,27 +20,27 @@ app.use(express.json());
 
 app.use(requestLogger);
 
-const allowedCors = [
-  'https://ilnovikovru.nomoredomains.work',
-];
+// const allowedCors = [
+//   'https://ilnovikovru.nomoredomains.work',
+// ];
 
-app.use((req, res, next) => {
-  const { origin, method } = req;
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-  const requestHeaders = req.headers['access-control-request-headers'];
+// app.use((req, res, next) => {
+//   const { origin, method } = req;
+//   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
+//   const requestHeaders = req.headers['access-control-request-headers'];
 
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', '*');
-  }
+//   if (allowedCors.includes(origin)) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//   }
 
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.status(200).end();
-  }
+//   if (method === 'OPTIONS') {
+//     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//     res.header('Access-Control-Allow-Headers', requestHeaders);
+//     return res.status(200).end();
+//   }
 
-  return next();
-});
+//   return next();
+// });
 
 app.get('/crash-test', () => {
   setTimeout(() => {
