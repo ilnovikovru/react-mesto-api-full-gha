@@ -126,7 +126,7 @@ class Api {
 }
 
 const apiConfig = new Api({
-  url: 'https://ilnovikovru.nomoredomains.work/api',
+  url: 'https://ilnovikovru.nomoredomains.work/api', // http://localhost:3000/api
 });
 
 export default apiConfig;

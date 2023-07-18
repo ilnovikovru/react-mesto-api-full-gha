@@ -25,7 +25,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [shouldNavigate, setShouldNavigate] = React.useState(false);
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = React.useState("");
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
@@ -35,6 +34,7 @@ function App() {
 
   React.useEffect(() => {
     const token = localStorage.getItem('jwt');
+    console.log(token);
     if (token) {
       apiConfig.getUserInfo(token)
         .then((userInfo) => {
@@ -59,7 +59,7 @@ function App() {
           console.log(err);
         });
     }
-  }, []);  
+  }, [navigate]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);

@@ -1,5 +1,5 @@
 import apiConfig from './api';
-export const BASE_URL = 'https://ilnovikovru.nomoredomains.work/api';
+export const BASE_URL = 'https://ilnovikovru.nomoredomains.work/api'; // http://localhost:3000/api
 
 const checkResponse = (res) => {
     if (res.ok) {
