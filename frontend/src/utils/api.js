@@ -121,7 +121,7 @@ class Api {
       body: JSON.stringify({
         avatar: data.link,
       })
-    }).then(console.log());
+    }).then(console.log);
   }
 }
 
