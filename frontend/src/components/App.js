@@ -43,29 +43,23 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-      
+    }
+  }, []);
+  
+  React.useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
       apiConfig.getInitialCards(token)
         .then((initialCards) => {
           setCards(initialCards);
+          setLoggedIn(true);
+          navigate('/');
         })
         .catch((err) => {
           console.log(err);
         });
-      
-      checkToken(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            setUserEmail(res.data.email);
-            navigate('/');
-          }
-        })
-        .catch((err) => {
-          setLoggedIn(false);
-          setUserEmail('');
-        });
     }
-}, [navigate]); 
+  }, []);  
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
