@@ -43,7 +43,7 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-  
+
       apiConfig.getInitialCards(token)
         .then((initialCards) => {
           setCards(initialCards);
@@ -53,8 +53,21 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
+
+      checkToken(token)
+        .then((res) => {
+          if (res) {
+            setUserEmail(res.data.email);
+            setLoggedIn(true);
+            navigate('/');
+          }
+        })
+        .catch((err) => {
+          setLoggedIn(false);
+          setUserEmail('');
+        });
     }
-  }, [navigate]);  
+  }, [navigate]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
