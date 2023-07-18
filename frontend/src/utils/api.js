@@ -19,6 +19,7 @@ class Api {
   }
 
   _request(endpoint, options) {
+    console.log(`Requesting ${this._baseUrl}${endpoint}`);
     return fetch(`${this._baseUrl}${endpoint}`, options).then(this._checkResponse);
   }
 
