@@ -43,21 +43,18 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-    }
-  }, []);
   
-  React.useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
       apiConfig.getInitialCards(token)
         .then((initialCards) => {
           setCards(initialCards);
+          setLoggedIn(true);
+          navigate('/');
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, []);  
+  }, [navigate]);  
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
