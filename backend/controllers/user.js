@@ -29,7 +29,7 @@ exports.getUserById = (req, res, next) => {
 
 exports.createUser = (req, res, next) => {
   // eslint-disable-next-line no-console
-  console.log('Вызвана функция createUser'); // лог в начале функции
+  // console.log('Вызвана функция createUser'); // лог в начале функции
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -37,7 +37,7 @@ exports.createUser = (req, res, next) => {
   bcrypt.hash(password, 10)
     .then((hash) => {
       // eslint-disable-next-line no-console
-      console.log('Пароль хеширован'); // лог после хеширования пароля
+      // console.log('Пароль хеширован'); // лог после хеширования пароля
       const user = new User({
         name, about, avatar, email, password: hash,
       });
@@ -45,7 +45,7 @@ exports.createUser = (req, res, next) => {
     })
     .then((newUser) => {
       // eslint-disable-next-line no-console
-      console.log('Пользоваетль создан'); // лог после создания пользователя
+      // console.log('Пользоваетль создан'); // лог после создания пользователя
       res.status(201).send({
         name: newUser.name,
         about: newUser.about,
@@ -55,7 +55,7 @@ exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       // eslint-disable-next-line no-console
-      console.log('Ошибка в функции createUser:', err); // лог при возникновении ошибки
+      // console.log('Ошибка в функции createUser:', err); // лог при возникновении ошибки
       if (err.code === 11000) {
         next(new ConflictError('Пользователь с данным email уже существует'));
       } else if (err.name === 'ValidationError') {

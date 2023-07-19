@@ -31,7 +31,7 @@ app.post('/api/signup', signupValidation, createUser);
 
 app.use((req, res, next) => {
   // eslint-disable-next-line no-console
-  console.log(`Токен получен: ${req.headers.authorization}`);
+  // console.log(`Токен получен: ${req.headers.authorization}`);
   next();
 });
 
