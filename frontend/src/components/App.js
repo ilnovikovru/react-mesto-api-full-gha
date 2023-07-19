@@ -31,35 +31,37 @@ function App() {
   const [infoTooltipMessage, setInfoTooltipMessage] = React.useState("");
   const [isSuccessful, setIsSuccessful] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [token, setToken] = React.useState('');
 
   React.useEffect(() => {
     const token = localStorage.getItem('jwt');
     console.log(token);
-    if (token) {
+    if (!loggedIn && token) {
       apiConfig.getUserInfo(token)
         .then((userInfo) => {
           setCurrentUser(userInfo);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-  
-  React.useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      apiConfig.getInitialCards(token)
-        .then((initialCards) => {
-          setCards(initialCards);
           setLoggedIn(true);
+          setToken(token);
           navigate('/');
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [navigate]);
+  }, [navigate, loggedIn]);
+  
+  React.useEffect(() => {
+    if (token) {
+      apiConfig.getInitialCards(token)
+        .then((initialCards) => {
+          setCards(initialCards);
+          
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [token]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
