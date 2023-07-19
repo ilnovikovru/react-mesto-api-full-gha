@@ -20,7 +20,7 @@ class Api {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       }
     });
   }  
@@ -30,7 +30,7 @@ class Api {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         name: data.name,
@@ -44,7 +44,7 @@ class Api {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         avatar: data.avatar,
@@ -57,7 +57,7 @@ class Api {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       }
     });
   }
@@ -67,7 +67,7 @@ class Api {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         name: data.name,
@@ -81,7 +81,7 @@ class Api {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         name: data.name,
@@ -95,7 +95,7 @@ class Api {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       }
     });
   }
@@ -105,7 +105,7 @@ class Api {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       }
     });
   }
@@ -115,7 +115,7 @@ class Api {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       }
     });
   }
@@ -133,7 +133,7 @@ class Api {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`
+        'authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         avatar: data.link,
