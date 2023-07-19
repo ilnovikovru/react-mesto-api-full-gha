@@ -33,15 +33,37 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [token, setToken] = React.useState('');
 
+  // React.useEffect(() => {
+  //   const token = localStorage.getItem('jwt');
+  //   if (!loggedIn && token) {
+  //     checkToken(token)
+  //       .then((res) => {
+  //         if (res && !loggedIn) {
+  //           setLoggedIn(true);
+  //           setToken(token);
+            
+  //           navigate('/');
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (loggedIn) {
+  //           setLoggedIn(false);
+  //           setUserEmail('');
+  //         }
+  //       });
+  //   }
+  // }, [loggedIn, navigate, token]);
+
   React.useEffect(() => {
     const token = localStorage.getItem('jwt');
-    console.log(token);
+    // console.log(token);
     if (!loggedIn && token) {
       apiConfig.getUserInfo(token)
         .then((userInfo) => {
           setCurrentUser(userInfo);
           setLoggedIn(true);
           setToken(token);
+          setUserEmail(userInfo.email);
           navigate('/');
         })
         .catch((err) => {
@@ -51,17 +73,27 @@ function App() {
   }, [navigate, loggedIn]);
   
   React.useEffect(() => {
-    if (token) {
-      apiConfig.getInitialCards(token)
-        .then((initialCards) => {
-          setCards(initialCards);
-          
+    if (loggedIn) {
+      if (token) {
+        console.log(token);
+        apiConfig.getInitialCards(token)
+          .then((initialCards) => {
+            setCards(initialCards.reverse());
+            
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+            apiConfig.getUserInfo(token)
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
         })
         .catch((err) => {
           console.log(err);
         });
+      }
     }
-  }, [token]);
+  }, [token, loggedIn]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -80,9 +112,8 @@ function App() {
   };
 
   function handleCardLike(card) {
-    const token = localStorage.getItem('jwt');
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    apiConfig.changeLikeCardStatus(token, card._id, !isLiked)
+    apiConfig.changeLikeCardStatus(card._id, !isLiked, token)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
@@ -92,8 +123,7 @@ function App() {
   }
 
   const handleCardDelete = (card) => {
-    const token = localStorage.getItem('jwt');
-    apiConfig.deleteCard(token, card._id)
+    apiConfig.deleteCard(card._id, token)
       .then(() => {
         const newCards = cards.filter((c) => c._id !== card._id);
         setCards(newCards);
@@ -104,9 +134,8 @@ function App() {
   };
 
   const handleUpdateUser = (userData) => {
-    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.setUserInfo(token, userData).then(setCurrentUser);
+      return apiConfig.setUserInfo(userData, token).then(setCurrentUser);
     }
     handleSubmit(makeRequest);
   };
@@ -122,9 +151,8 @@ function App() {
   const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard;
 
   const handleUpdateAvatar = (avatarData) => {
-    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.setUserAvatar(token, avatarData).then(setCurrentUser);
+      return apiConfig.setUserAvatar(avatarData, token).then(setCurrentUser);
     }
     handleSubmit(makeRequest);
   };
@@ -138,9 +166,8 @@ function App() {
   }
 
   const handleAddPlaceSubmit = (newCard) => {
-    const token = localStorage.getItem('jwt');
     function makeRequest() {
-      return apiConfig.addCard(token, newCard).then((newCard) => {
+      return apiConfig.addCard(newCard, token).then((newCard) => {
         setCards([newCard, ...cards]);
       });
     }
@@ -176,6 +203,7 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem('jwt', data.token);
+          setToken(data.token);
           setUserEmail(email);
           setLoggedIn(true);
           navigate('/');
@@ -193,25 +221,12 @@ function App() {
       });
   };
 
-  React.useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      checkToken(token)
-        .then((res) => {
-          if (res && !loggedIn) {
-            setLoggedIn(true);
-            setUserEmail(res.data.email);
-            navigate('/');
-          }
-        })
-        .catch((err) => {
-          if (loggedIn) {
-            setLoggedIn(false);
-            setUserEmail('');
-          }
-        });
-    }
-  }, []);
+  const handleSignOut = () => {
+    localStorage.removeItem('jwt');
+    setUserEmail('');
+    setToken('');
+    setLoggedIn(false);
+  }
 
 
 
@@ -219,7 +234,7 @@ function App() {
     <AppContext.Provider value={{ isLoading, closeAllPopups }}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-          <Header loggedIn={loggedIn} userEmail={userEmail} />
+          <Header loggedIn={loggedIn} userEmail={userEmail} onSignOut={handleSignOut} />
           <Routes>
             <Route path="/" element={<ProtectedRoute component={Main}
               cards={cards}

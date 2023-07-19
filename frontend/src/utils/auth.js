@@ -1,5 +1,5 @@
-import apiConfig from './api';
-export const BASE_URL = 'https://ilnovikovru.nomoredomains.work/api'; // http://localhost:3000/api
+export const BASE_URL = process.env.REACT_APP_API; // http://localhost:3000/api
+console.log(BASE_URL);
 
 const checkResponse = (res) => {
     if (res.ok) {

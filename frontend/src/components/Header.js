@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../images/logo.svg';
 
-function Header({ loggedIn, userEmail }) {
+function Header({ loggedIn, userEmail, onSignOut }) {
   const location = useLocation();
 
   const renderLoginControl = () => {
@@ -13,7 +13,7 @@ function Header({ loggedIn, userEmail }) {
       return (
           <div className="header__auth-container">
             <p className="header__email">{userEmail}</p>
-            <Link to='/sign-in' className="header__sing-link header__sing-link_logout">Выйти</Link>
+            <Link onClick={onSignOut} to='/sign-in' className="header__sing-link header__sing-link_logout">Выйти</Link>
           </div>
       );
     }
