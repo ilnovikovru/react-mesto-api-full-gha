@@ -19,7 +19,7 @@ class Api {
   }
 
   _request(endpoint, options) {
-    console.log(`Requesting ${this._baseUrl}${endpoint}`);
+    console.log("Токен перед запросом: ", this._headers ? this._headers.authorization : 'Токен не установлен');
     return fetch(`${this._baseUrl}${endpoint}`, options).then(this._checkResponse);
   }
 
