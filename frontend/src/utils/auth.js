@@ -33,12 +33,7 @@ export const authorize = (email, password) => {
         },
         body: JSON.stringify({ email, password })
     }).then(data => {
-        console.log("Полученные данные: ", data); // Добавлен вывод всех полученных данных
-        if (data.token) {
-            console.log("Токен перед setToken:", data.token);  // Вывод токена в консоль
-            apiConfig.setToken(data.token);
-            console.log("Токен после setToken:", apiConfig.getToken()); // Проверка сохраненного токена
-        }
+        console.log("Полученные данные: ", data); // Вывод всех полученных данных
         return data;
     });
 };
